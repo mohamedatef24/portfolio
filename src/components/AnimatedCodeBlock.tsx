@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 const tokenClassMap: Record<string, string> = {
   "code-string": "text-cyan-400 font-bold",
@@ -10,7 +10,7 @@ const tokenClassMap: Record<string, string> = {
 
 const AnimatedCodeBlock = () => {
   // Each line is an array of tokens: { text, className }
-  const codeLines = [
+  const codeLines = useMemo(() => [
     [
       { text: 'const', className: 'code-key' },
       { text: ' developer ', className: 'code-this' },
@@ -84,7 +84,7 @@ const AnimatedCodeBlock = () => {
     [
       { text: '}', className: 'code-punctuation' },
     ],
-  ];
+  ], []);
   const [lineIdx, setLineIdx] = React.useState(0);
   const [charIdx, setCharIdx] = React.useState(0);
   const [done, setDone] = React.useState(false);
@@ -108,7 +108,7 @@ const AnimatedCodeBlock = () => {
     } else {
       setDone(true);
     }
-  }, [lineIdx, charIdx, done]);
+  }, [lineIdx, charIdx, done, codeLines]);
 
   // Render lines up to current
   const renderedLines = codeLines.slice(0, lineIdx).map((line, i) => (

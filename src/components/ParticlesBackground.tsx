@@ -1,19 +1,26 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Engine } from "@tsparticles/engine";
 import { loadAll } from "@tsparticles/all";
-import { Particles } from "@tsparticles/react";
+import { Particles, initParticlesEngine } from "@tsparticles/react";
 
 export default function ParticlesBackground() {
-  const particlesInit = useCallback(async (engine: Engine) => {
-    await loadAll(engine);
+  const [init, setInit] = useState(false);
+
+  useEffect(() => {
+    initParticlesEngine(async (engine: Engine) => {
+      await loadAll(engine);
+    }).then(() => {
+      setInit(true);
+    });
   }, []);
+
+  if (!init) return null;
 
   return (
     <Particles
       id="tsparticles"
-      particlesInit={particlesInit}
       className="fixed top-0 left-0 w-screen h-screen z-0 pointer-events-none"
       options={{
         fullScreen: { enable: false },

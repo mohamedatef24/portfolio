@@ -14,6 +14,7 @@ const menuItems = [
 export default function AnimatedSidebar() {
   // Responsive: only show on desktop
   const [show, setShow] = useState(true);
+  const activeIndex = useScrollSpy();
   useEffect(() => {
     const check = () => setShow(window.innerWidth >= 900);
     check();
@@ -21,8 +22,6 @@ export default function AnimatedSidebar() {
     return () => window.removeEventListener("resize", check);
   }, []);
   if (!show) return null;
-
-  const activeIndex = useScrollSpy();
 
   const handleClick = (i: number) => {
     const id = SECTION_IDS_LIST[i];

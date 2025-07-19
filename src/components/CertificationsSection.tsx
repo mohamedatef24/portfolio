@@ -24,7 +24,7 @@ function CertificationsCarousel() {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [index, paused]);
+  }, [index, paused, certificates.length]);
 
   const defaultWidth = 710;
   const hoveredWidth = 760;
